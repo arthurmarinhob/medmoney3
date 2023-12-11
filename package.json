@@ -12,7 +12,8 @@
   "dependencies": {
     "react": "18.2.0",
     "react-native": "0.72.7",
-    "react-native-data-table": "^0.2.2"
+    "react-native-data-table": "^0.2.2",
+    "react-native-datatable": "^0.0.8"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

@@ -5775,6 +5775,11 @@ react-native-data-table@^0.2.2:
     deprecated-react-native-listview "^0.0.8"
     react-native-vector-icons "^4.4.2"
 
+react-native-datatable@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.npmjs.org/react-native-datatable/-/react-native-datatable-0.0.8.tgz"
+  integrity sha512-Ul6OQ2+g2RrIEO2n1SaunqDYKP3rN3UACw6Wb3U2NAQlao3tbtaTvjppRcayNw6D2N4J7Qj6xjc3WYBzZMI1/g==
+
 react-native-vector-icons@^4.4.2:
   version "4.6.0"
   resolved "https://registry.npmjs.org/react-native-vector-icons/-/react-native-vector-icons-4.6.0.tgz"

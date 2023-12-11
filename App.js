@@ -33,6 +33,21 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.titleContainer}>Meus plantões</Text>
+      <FlatList
+        data={todosLancamentos}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.lancamentoItem}>
+            <Text>Data: {item.data}</Text>
+            <Text>Tipo: {item.tipo}</Text>
+            <Text>Nome: {item.nome}</Text>
+            <Text>Valor: {item.valor}</Text>
+            <Text>Obs: {item.obs}</Text>
+            <Text>Check: {item.check ? 'Marcado' : 'Não marcado'}</Text>
+          </View>
+        )}
+      />
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Data"
@@ -73,21 +88,6 @@ export default function App() {
         />
       </View>
       <Button title="Enviar" onPress={handleSubmit} />
-
-      <FlatList
-        data={todosLancamentos}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.lancamentoItem}>
-            <Text>Data: {item.data}</Text>
-            <Text>Tipo: {item.tipo}</Text>
-            <Text>Nome: {item.nome}</Text>
-            <Text>Valor: {item.valor}</Text>
-            <Text>Obs: {item.obs}</Text>
-            <Text>Check: {item.check ? 'Marcado' : 'Não marcado'}</Text>
-          </View>
-        )}
-      />
     </View>
   );
 }
@@ -95,7 +95,13 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 10,
+    marginTop: 60,
+  },
+  titleContainer: {
+    textAlign: 'center',
+    fontSize: 20,
+    marginBottom: 8
   },
   inputContainer: {
     flexDirection: 'row', // Para criar uma fila horizontal
