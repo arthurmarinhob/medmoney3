@@ -12,6 +12,16 @@ export default function App() {
     check: false,
   });
 
+  const [filtroInativos, setFiltroInativos] = useState(false);
+
+  const itensFiltrados = todosLancamentos.filter((item) => {
+    const ativo = filtroAtivos ? item.check : true;
+    const inativo = filtroInativos ? !item.check : true;
+    
+    return ativo && inativo;
+  });
+
+
   const handleChange = (campo, valor) => {
     setNovoLancamento({
       ...novoLancamento,
@@ -31,23 +41,54 @@ export default function App() {
     });
   };
 
+  const handleSwitchChange = (index, value) => {
+    const updatedLancamentos = [...todosLancamentos];
+    updatedLancamentos[index].check = value;
+    setTodosLancamentos(updatedLancamentos);
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.titleContainer}>Meus plantões</Text>
+      
+      <View style={styles.switchContainerTop}>
+        <Switch
+          value={filtroInativos}
+          onValueChange={(value) => setFiltroInativos(value)}
+        />
+        <Text>Caloreiros</Text>
+      </View>
+
+      <View style={styles.headerContainer}>
+        <Text style={styles.label}>Data</Text>
+        <Text style={styles.label}>Tipo</Text>
+        <Text style={styles.label}>Nome</Text>
+        <Text style={styles.label}>Valor</Text>
+        <Text style={styles.label}>Obs</Text>
+        <Text style={styles.label}>Pago?</Text>
+      </View>
+     
       <FlatList
-        data={todosLancamentos}
+        data={itensFiltrados}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <View style={styles.lancamentoItem}>
-            <Text>Data: {item.data}</Text>
-            <Text>Tipo: {item.tipo}</Text>
-            <Text>Nome: {item.nome}</Text>
-            <Text>Valor: {item.valor}</Text>
-            <Text>Obs: {item.obs}</Text>
-            <Text>Check: {item.check ? 'Marcado' : 'Não marcado'}</Text>
+            <Text style={styles.label}>{item.data}</Text>
+            <Text style={styles.label}>{item.tipo}</Text>
+            <Text style={styles.label}>{item.nome}</Text>
+            <Text style={styles.label}>{item.valor}</Text>
+            <Text style={styles.label}>{item.obs}</Text>
+
+            <View style={styles.switchContainer}>
+              <Switch
+                value={item.check}
+                onValueChange={(value) => handleSwitchChange(index, value)}
+              />
+            </View>
           </View>
         )}
       />
+
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Data"
@@ -80,13 +121,7 @@ export default function App() {
           style={styles.input}
         />
       </View>
-      <View style={styles.switchContainer}>
-        <Text>Check</Text>
-        <Switch
-          value={novoLancamento.check}
-          onValueChange={(value) => handleChange('check', value)}
-        />
-      </View>
+
       <Button title="Enviar" onPress={handleSubmit} />
     </View>
   );
@@ -120,9 +155,45 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  switchContainerTop: {
+    flexDirection: 'row-reverse',
+    alignItems: 'center',
+  },
   lancamentoItem: {
     backgroundColor: '#eee',
     padding: 10,
     marginVertical: 5,
+  },
+  lancamentoItem: {
+    flexDirection: 'row', // Exibir os itens em uma linha
+    justifyContent: 'space-between', // Espaço igual entre os itens
+    alignItems: 'center', // Alinhar os itens verticalmente
+    backgroundColor: '#eee',
+    padding: 10,
+    marginVertical: 5,
+  },
+  label: {
+    flex: 1, // Faz com que os itens ocupem espaço igual
+    marginRight: 5, // Adiciona margem direita para separar os itens
+  },
+  lancamentoItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#eee',
+    padding: 10,
+    marginVertical: 5,
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#eee',
+    padding: 10,
+    marginBottom: 5,
+  },
+  label: {
+    flex: 1, // Faz com que os itens ocupem espaço igual
+    marginRight: 5, // Adiciona margem direita para separar os itens
+    textAlign: 'center',
   },
 });
